@@ -34,4 +34,5 @@ public class ArticleController {
         String res = userRemoteClient.hello();
         return res;
     }
+
 }
