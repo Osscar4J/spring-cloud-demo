@@ -8,6 +8,6 @@ public class UserController {
 
     @GetMapping("/user/hello")
     public String hello(){
-        return "hello";
+        return "hello:8082";
     }
 }
