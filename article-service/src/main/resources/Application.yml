@@ -14,3 +14,11 @@ eureka:
     instance-id: ${spring.application.name}:${spring.cloud.client.ip-address}:${server.port}
     lease-renewal-interval-in-seconds: 5
     lease-expiration-duration-in-seconds: 5
+logging:
+  level:
+    com:
+      zhao:
+        demo:
+          api:
+            client:
+              UserRemoteClient: DEBUG

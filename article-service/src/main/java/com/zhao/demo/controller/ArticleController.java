@@ -1,5 +1,6 @@
 package com.zhao.demo.controller;
 
+import com.zhao.demo.api.client.UserRemoteClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.client.ServiceInstance;
 import org.springframework.cloud.client.loadbalancer.LoadBalancerClient;
@@ -14,6 +15,8 @@ public class ArticleController {
     private RestTemplate restTemplate;
     @Autowired
     private LoadBalancerClient loadBalancerClient;
+    @Autowired
+    private UserRemoteClient userRemoteClient;
 
     @GetMapping("/article/callHello")
     public String callHello(){
@@ -24,5 +27,11 @@ public class ArticleController {
     public Object chooseUrl(){
         ServiceInstance instance = loadBalancerClient.choose("EUREKA-CLIENT-USER-SERVICE");
         return instance;
+    }
+
+    @GetMapping("/callHello")
+    public String callHello2(){
+        String res = userRemoteClient.hello();
+        return res;
     }
 }
