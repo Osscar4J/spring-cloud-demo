@@ -10,7 +10,7 @@ import java.util.List;
 
 public class IpFilter extends ZuulFilter {
 
-    private List<String> blackIpList = Arrays.asList("127.0.0.1", "192.168.31.155");
+    private List<String> blackIpList = Arrays.asList("127.0.0.1");
 
     @Override
     public String filterType() {
@@ -24,17 +24,20 @@ public class IpFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return true;
+        RequestContext context = RequestContext.getCurrentContext();
+        Object success = context.get("isSuccess");
+        return success == null ? true : Boolean.parseBoolean(success.toString());
     }
 
     @Override
     public Object run() {
-        RequestContext ctx = RequestContext.getCurrentContext();
-        String ip = IpUtils.getIpAddr(ctx.getRequest());
+        RequestContext context = RequestContext.getCurrentContext();
+        String ip = IpUtils.getIpAddr(context.getRequest());
         if (!StringUtils.isEmpty(ip) && blackIpList.contains(ip)){
-            ctx.setSendZuulResponse(false);
-            ctx.setResponseBody("{\"code\":401}");
-            ctx.getResponse().setContentType("application/json; charset=utf-8");
+            context.setSendZuulResponse(false);
+            context.setResponseBody("{\"code\":401}");
+            context.getResponse().setContentType("application/json; charset=utf-8");
+            context.set("isSuccess", false);
             return null;
         }
         return null;
