@@ -1,6 +1,10 @@
 spring:
   application:
     name: zuul-demo
+  servlet:
+    multipart:
+      max-file-size: 100Mb
+      max-request-size: 100Mb
 server:
   port: 8080
 eureka:
@@ -9,11 +13,12 @@ eureka:
       defaultZone: http://admin:123123@localhost:8761/eureka/
 zuul:
   retryable: true
+  prefix: /api
 ribbon:
   # 请求连接超时时间（ms）
-  connectTimeout: 500
+  connectTimeout: 3000
   # 请求处理超时时间（ms）
-  readTimeout: 5000
+  readTimeout: 60000
   # 对当前实例的重试次数
   maxAutoRetries: 1
   # 切换实例的最大重试次数
