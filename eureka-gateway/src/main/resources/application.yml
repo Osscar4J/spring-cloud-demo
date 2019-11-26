@@ -14,15 +14,15 @@ spring:
           enabled: true
           lowerCaseServiceId: true
       routes:
-      - id: fsh-house
-        uri: lb://fsh-house
+      - id: user-service
+        uri: lb://eureka-client-user-service
         predicates:
-        - Path=/eureka-client-user-service/**
+        - Path=/user/**
         filters:
         - name: RequestRateLimiter
           args:
             redis-rate-limiter.replenishRate: 1
-            redis-rate-limiter.burstCapacity: 1
+            redis-rate-limiter.burstCapacity: 20
             key-resolver: "#{@ipKeyResolver}"
 eureka:
   client:
