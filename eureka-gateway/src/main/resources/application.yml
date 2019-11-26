@@ -1,6 +1,10 @@
 server:
   port: 2001
 spring:
+  redis:
+    host: 127.0.0.1
+    port: 6379
+    database: 0
   application:
     name: gateway
   cloud:
@@ -9,6 +13,17 @@ spring:
         locator:
           enabled: true
           lowerCaseServiceId: true
+      routes:
+      - id: fsh-house
+        uri: lb://fsh-house
+        predicates:
+        - Path=/eureka-client-user-service/**
+        filters:
+        - name: RequestRateLimiter
+          args:
+            redis-rate-limiter.replenishRate: 1
+            redis-rate-limiter.burstCapacity: 1
+            key-resolver: "#{@ipKeyResolver}"
 eureka:
   client:
     serviceUrl:

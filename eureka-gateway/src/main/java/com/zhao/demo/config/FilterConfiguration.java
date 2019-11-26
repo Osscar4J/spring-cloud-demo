@@ -1,8 +1,10 @@
 package com.zhao.demo.config;
 
+import com.zhao.demo.utils.IpUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
+import org.springframework.cloud.gateway.filter.ratelimit.KeyResolver;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -45,4 +47,22 @@ public class FilterConfiguration {
             }));
         };
     }
+
+    /**
+     * IP限流
+     * @return
+     */
+    @Bean
+    public KeyResolver ipKeyResolver(){
+        return exchange -> Mono.just(IpUtils.getIpAddr(exchange.getRequest()));
+    }
+
+//    /**
+//     * 用户限流
+//     * @return
+//     */
+//    @Bean
+//    public KeyResolver userKeyResolver(){
+//        return exchange -> Mono.just(exchange.getRequest().getQueryParams().getFirst("userId"));
+//    }
 }
