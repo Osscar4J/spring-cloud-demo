@@ -10,6 +10,21 @@ spring:
     name: gateway
   cloud:
     gateway:
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "*"
+            exposedHeaders:
+            - content-type
+            allowedHeaders:
+            - content-type
+            allowCredentials: true
+            allowedMethods:
+            - GET
+            - OPTIONS
+            - PUT
+            - DELETE
+            - POST
       discovery:
         locator:
           enabled: true
