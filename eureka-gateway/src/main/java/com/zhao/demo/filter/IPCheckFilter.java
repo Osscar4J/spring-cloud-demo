@@ -32,7 +32,7 @@ public class IPCheckFilter implements GlobalFilter, Ordered {
             response.getHeaders().add("Content-Type", "application/json;charset=UTF-8");
             return response.writeWith(Mono.just(buffer));
         }
-        logger.info("IPCheck filter");
+        logger.info("=====================IPCheck filter=====================");
         return chain.filter(exchange);
     }
 
